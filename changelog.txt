@@ -1,0 +1,16 @@
+11.11.21:
+Created repo
+Checkpoints reached:
+    Blue background view
+    Markers placed
+    Agents placedAgents move
+    Agents see
+    Agents scout
+    Agents talk to master controller
+    Master controller shows on view
+Future Checkpoints:
+    Smooth out motion; could jack up MACRO_TO_MICRO_CONVERSION?
+    Implement interacting
+    Add scout mission, identify
+    Add sensors?
+    Add controller for each agent?
