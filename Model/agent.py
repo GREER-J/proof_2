@@ -201,7 +201,7 @@ class Agent:
             self.release_macro_from_marked_as_assigned()
             self.mission = 'idle'
 
-    def interacting(self):
+    def identify(self):
         if(self.mission == 'idle'):
             # Select object to identify
             for world_object in self.simulation.master_controller.known_objects:
@@ -234,7 +234,7 @@ class Agent:
         elif(mission_choice == 'scout'):
             self.scout()
         elif(mission_choice == 'identify'):
-            self.interacting()
+            self.identify()
 
     def mainloop(self):
         """mainloop runs through each of the decisions and actions of agents on each turn
