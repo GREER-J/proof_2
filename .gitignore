@@ -4,7 +4,6 @@ __pycache__/controller.cpython-37.pyc
 __pycache__/controller.cpython-38.pyc
 __pycache__/view.cpython-37.pyc
 __pycache__/view.cpython-38.pyc
-.vscode/settings.json
 Model/__pycache__/agent.cpython-37.pyc
 Model/__pycache__/agent.cpython-38.pyc
 Model/__pycache__/macro_map.cpython-37.pyc
@@ -15,3 +14,4 @@ Model/__pycache__/simulation.cpython-37.pyc
 Model/__pycache__/simulation.cpython-38.pyc
 Model/__pycache__/world_object.cpython-37.pyc
 Model/__pycache__/world_object.cpython-38.pyc
+.vscode/settings.json
