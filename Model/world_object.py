@@ -30,6 +30,14 @@ class Marker(World_Objects):
     """
 
     def __init__(self, micro_x_position: int, micro_y_position: int, macro_x_position: int, macro_y_position: int) -> None:
+        """__init__ creates a new world object
+
+        Args:
+            micro_x_position (int): The x position in the micro grid
+            micro_y_position (int): The y position in the micro grid
+            macro_x_position (int): The x position in the macro grid
+            macro_y_position (int): The y position in the macro grid
+        """
         super().__init__(micro_x_position, micro_y_position,
                          macro_x_position, macro_y_position)
         self.interacted = False

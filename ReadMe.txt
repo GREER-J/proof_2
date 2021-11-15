@@ -12,4 +12,6 @@ PLAN:
  - Macro agent organizer
 
 TODO:
- - Everything
+ - Update UAV class icon in view
+ - Add ability to manually place markers
+ - Add identifying mission sets (Split out policy one per agent type)
