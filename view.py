@@ -82,7 +82,7 @@ class Pygame_view(View):
             f"{identified} / {total} identified objects", True, (255, 255, 255))
         interacted_objects = self.my_font.render(
             f"{interacted} / {total} interacted objects", True, (255, 255, 255))
-        self.screen.blit(master_controller_title, (250, 250))
-        self.screen.blit(found_objects, (250, 300))
-        self.screen.blit(identified_objects, (250, 350))
-        self.screen.blit(interacted_objects, (250, 400))
+        self.screen.blit(master_controller_title, (300, 20))
+        self.screen.blit(found_objects, (320, 35))
+        self.screen.blit(identified_objects, (320, 50))
+        self.screen.blit(interacted_objects, (320, 65))

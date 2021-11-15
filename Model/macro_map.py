@@ -16,12 +16,24 @@ class macro_map_square:
     def __init__(self, MACRO_X: int, MACRO_Y: int, MACRO_TO_MICRO_CONVERSION: int):
         self.MACRO_X = MACRO_X
         self.MACRO_Y = MACRO_Y
-        self.micro_x_pos_center = (MACRO_X + 0.5) * MACRO_TO_MICRO_CONVERSION
-        self.micro_y_pos_center = (MACRO_Y + 0.5) * MACRO_TO_MICRO_CONVERSION
+        self.micro_x_pos_center = int(
+            (MACRO_X + 0.5) * MACRO_TO_MICRO_CONVERSION)
+        self.micro_y_pos_center = int(
+            (MACRO_Y + 0.5) * MACRO_TO_MICRO_CONVERSION)
         self.objects_in_square = []
         self.searched = False
         self.contains_objects = False
+        self.assigned = False
 
     def add_object_to_macro_square(self, object_to_add):
         self.contains_objects = True
         self.objects_in_square.append(object_to_add)
+
+    def mark_as_assigned(self):
+        self.assigned = True
+
+    def release_from_marked_as_assigned(self):
+        self.assigned = False
+
+    def mark_as_searched(self):
+        self.searched = True
