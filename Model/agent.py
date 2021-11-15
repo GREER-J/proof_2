@@ -281,6 +281,7 @@ class USV(Agent):
         super().__init__(start_micro_x_position, start_micro_y_position,
                          simulation, MACRO_X, MACRO_Y, MACRO_TO_MICRO_CONVERSION)
         self.detection_range = 1  # ToDo: Make this relate to config file
+        self.agent_type = 'USV'
 
     def run_policy(self) -> str:
         """run_policy runs USV policy:
@@ -315,6 +316,7 @@ class UAV(Agent):
         super().__init__(start_micro_x_position, start_micro_y_position,
                          simulation, MACRO_X, MACRO_Y, MACRO_TO_MICRO_CONVERSION)
         self.detection_range = 3  # ToDo: Make this relate to config file
+        self.agent_type = 'UAV'
 
     def run_policy(self) -> str:
         """run_policy UAV policy:

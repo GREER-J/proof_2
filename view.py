@@ -84,8 +84,12 @@ class Pygame_view(View):
                                 self.controller.model.MICRO_Y_MAX) * SIM_SETTINGS['WINDOW_WIDTH']
             micro_y_position = (agent.micro_y_position /
                                 self.controller.model.MICRO_Y_MAX) * SIM_SETTINGS['WINDOW_HEIGHT']
-            pygame.draw.rect(self.screen, self.RED,
-                             (micro_x_position, micro_y_position, 10, 7))
+            if(agent.agent_type == 'USV'):
+                pygame.draw.rect(self.screen, self.RED,
+                                 (micro_x_position, micro_y_position, 10, 7))
+            elif(agent.agent_type == 'UAV'):
+                pygame.draw.rect(self.screen, self.BLUE,
+                                 (micro_x_position, micro_y_position, 10, 7))
 
     def draw_objects(self):
         """draw_objects draws all the objects in the world
