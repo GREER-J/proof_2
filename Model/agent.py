@@ -117,8 +117,9 @@ class Agent:
                             obj)
 
     def see(self):
+        # ToDo: Something is up with this function, it returns False when it clearly should't
         """see checks through each world object in the simulation and checks if it is within detection range.
-        If an object is in range we call the set_detected method on that objects and report the finding to the master controller.
+        If an object is in range we return the object. Else we return False.
         """
         for world_object in self.simulation.objects:
             delta_x = world_object.micro_x_position - self.micro_x_position
@@ -126,11 +127,8 @@ class Agent:
             distance = math.sqrt(delta_x**2 + delta_y**2)
             if(distance < self.detection_range):
                 if(world_object.detected == False):
-                    # Object detected
-                    world_object.set_detected()
-                    # Report detection
-                    self.simulation.handle_report_detection_to_master_controller(
-                        world_object)
+                    return(world_object)
+        return(False)
 
     def move_mission(self):
         """move_mission implements a move mission.
@@ -203,6 +201,26 @@ class Agent:
             self.release_macro_from_marked_as_assigned()
             self.mission = 'idle'
 
+    def interacting(self):
+        if(self.mission == 'idle'):
+            # Select object to identify
+            for world_object in self.simulation.master_controller.known_objects:
+                if(world_object.identified == False):  # If it hasn't been identified
+                    # Set target to near object micro coords
+                    self.target_x = world_object.micro_x_position - 1  # Just to the left of object
+                    self.target_y = world_object.micro_y_position - 1  # Just underneath the object
+        # Move towards object
+        self.move(self.target_x, self.target_y)
+        # If close enough to object identify it
+        world_object = self.see()
+        if(world_object):
+            if(world_object.interacted == False):
+                # Object detected
+                world_object.set_interacted()
+                # Report detection
+                self.simulation.handle_report_interacted_to_master_controller()
+                self.mission = 'idle'
+
     def enact_mission(self, mission_choice: str):
         """enact_mission takes a mission choice and calls the relevant function
 
@@ -215,18 +233,8 @@ class Agent:
             self.go_home()
         elif(mission_choice == 'scout'):
             self.scout()
-
-    def run_policy(self) -> str:
-        """run_policy selects a mission choice depending on the specific policy of the agent
-
-        Returns:
-            str: The name of the mission type to be selected
-        """
-        # ToDo: Make this individual to UAV, USV!
-        mission_choice = 'go home'
-        if(self.found_object < self.total_objects):
-            mission_choice = 'scout'
-        return(mission_choice)
+        elif(mission_choice == 'identify'):
+            self.interacting()
 
     def mainloop(self):
         """mainloop runs through each of the decisions and actions of agents on each turn
@@ -274,6 +282,25 @@ class USV(Agent):
                          simulation, MACRO_X, MACRO_Y, MACRO_TO_MICRO_CONVERSION)
         self.detection_range = 1  # ToDo: Make this relate to config file
 
+    def run_policy(self) -> str:
+        """run_policy runs USV policy:
+
+        USV will:
+            - Interact with an object if available
+            - Then identify objects if available
+            - Then scout objects if available
+            - Then go home
+
+        Returns:
+            str: The name of the mission type to be selected
+        """
+        mission_choice = 'go home'
+        if(self.found_object < self.total_objects):
+            mission_choice = 'scout'
+        if(self.identified_objects < self.found_object):
+            mission_choice = 'identify'
+        return(mission_choice)
+
 
 class UAV(Agent):
     """UAV a class to handle the specifics of the USV agent type.
@@ -288,3 +315,19 @@ class UAV(Agent):
         super().__init__(start_micro_x_position, start_micro_y_position,
                          simulation, MACRO_X, MACRO_Y, MACRO_TO_MICRO_CONVERSION)
         self.detection_range = 3  # ToDo: Make this relate to config file
+
+    def run_policy(self) -> str:
+        """run_policy UAV policy:
+
+        UAV will:
+            - Scout all objects first
+            - Then identify objects
+            - Then go home
+
+        Returns:
+            str: The name of the mission type to be selected
+        """
+        mission_choice = 'go home'
+        if(self.found_object < self.total_objects):
+            mission_choice = 'scout'
+        return(mission_choice)

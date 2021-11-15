@@ -23,6 +23,7 @@ class Master_controller:
         self.macro_map = Macro_map(MACRO_X, MACRO_Y, MACRO_TO_MICRO_CONVERSION)
         FORMAT = '%(asctime)s -- %(message)s'
         logging.basicConfig(format=FORMAT)
+        # ToDo: Fully implement logging
         self.logger = logging.getLogger('Master controller log')
 
     def add_detected_object(self, object):
